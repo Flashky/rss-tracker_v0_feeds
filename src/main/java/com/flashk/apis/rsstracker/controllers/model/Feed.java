@@ -1,20 +1,15 @@
 package com.flashk.apis.rsstracker.controllers.model;
 
-import java.io.Serializable;
 import java.util.Date;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-@Getter
-@Setter
-public class Feed implements Serializable {
+import lombok.Data;
 
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 416464946159171510L;
+@Data
+@JsonInclude(Include.NON_NULL)
+public class Feed {
 	
 	private String id;
 	private Date createdDate;
