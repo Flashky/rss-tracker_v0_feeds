@@ -1,0 +1,15 @@
+server:
+  port: 8080
+  forward-headers-strategy: FRAMEWORK # Gateway HATEOAS urls to point to gateway
+
+spring:
+  application:
+    name: rss-tracker_api_v0_feeds # Convention: [application]_api_[vN]_[resource]_[subresource]
+  data:
+    mongodb:
+      authentication-database: admin
+      host: ${MONGODB_HOST}
+      port: ${MONGODB_PORT:27017}
+      database: ${MONGODB_DATABASE}
+      username: ${MONGODB_USERNAME}
+      password: ${MONGODB_PASSWORD}
