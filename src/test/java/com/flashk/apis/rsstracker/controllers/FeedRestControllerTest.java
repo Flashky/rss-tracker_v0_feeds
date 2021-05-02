@@ -56,7 +56,7 @@ class FeedRestControllerTest {
 		Mockito.doReturn(expected).when(feedService).listFeeds();
 		
 		// Execute method
-		List<Feed> result = feedService.listFeeds();
+		List<Feed> result = feedRestController.listFeeds();
 		
 		// Assertions
 		assertNotNull(result);
