@@ -1,5 +1,8 @@
 # rss-tracker_v0_feeds
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/8c1b7b60abea416883adfb28f3697880)](https://www.codacy.com/gh/Flashky/rss-tracker_v0_feeds/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Flashky/rss-tracker_v0_feeds&amp;utm_campaign=Badge_Grade)
+[![Build & Report](https://github.com/Flashky/rss-tracker_v0_feeds/actions/workflows/build-report.yml/badge.svg)](https://github.com/Flashky/rss-tracker_v0_feeds/actions/workflows/build-report.yml)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/8c1b7b60abea416883adfb28f3697880)](https://www.codacy.com/gh/Flashky/rss-tracker_v0_feeds/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Flashky/rss-tracker_v0_feeds&amp;utm_campaign=Badge_Grade) 
+[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/8c1b7b60abea416883adfb28f3697880)](https://www.codacy.com/gh/Flashky/rss-tracker_v0_feeds/dashboard?utm_source=github.com&utm_medium=referral&utm_content=Flashky/rss-tracker_v0_feeds&utm_campaign=Badge_Coverage)
+
 
 ## Configuration properties
 
