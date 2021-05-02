@@ -3,6 +3,8 @@ package com.flashk.apis.rsstracker.controllers;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.ArgumentMatchers.any;
 
 import java.util.ArrayList;
@@ -61,11 +63,41 @@ class FeedRestControllerTest {
 		Mockito.doReturn(expected).when(feedService).listFeeds();
 		
 		// Execute method
-		List<Feed> result = feedRestController.listFeeds();
+		ResponseEntity<List<Feed>> response = feedRestController.listFeeds();
 		
-		// Assertions
+		// Assertions - Response
+		assertNotNull(response);
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+		
+		// Assertions - Body
+		List<Feed> result = response.getBody();
+		
 		assertNotNull(result);
+		assertFalse(result.isEmpty());
 		assertEquals(expected.size(), result.size());
+
+	}
+	
+	@Test
+	void testListFeedsEmpty() {
+		
+		// Prepare POJOs
+		List<Feed> expected = new ArrayList<>();
+		
+		// Prepare mocks
+		Mockito.doReturn(expected).when(feedService).listFeeds();
+		
+		// Execute method
+		ResponseEntity<List<Feed>> response = feedRestController.listFeeds();
+		
+		
+		// Assertions - Response
+		assertNotNull(response);
+		assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+		
+		// Assertions - Body
+		List<Feed> result = response.getBody();
+		assertNull(result);
 
 	}
 	
@@ -82,11 +114,13 @@ class FeedRestControllerTest {
 		// Execute method
 		ResponseEntity<Feed> result = feedRestController.getFeed("1234");
 		
-		// Assertions
+		// Assertions - Response
 		assertNotNull(result);
-		assertNotNull(result.getBody());
 		assertEquals(HttpStatus.OK, result.getStatusCode());
-
+		
+		// Assertions - Body
+		assertNotNull(result.getBody());
+		
 	}
 	
 	@Test
@@ -101,10 +135,13 @@ class FeedRestControllerTest {
 		// Execute method
 		ResponseEntity<Feed> result = feedRestController.getFeed("1234");
 		
-		// Assertions
+		// Assertions - Response
 		assertNotNull(result);
-		assertNull(result.getBody());
 		assertEquals(HttpStatus.NO_CONTENT, result.getStatusCode());
+		
+		// Assertions - Body
+		assertNull(result.getBody());
+		
 
 	}
 

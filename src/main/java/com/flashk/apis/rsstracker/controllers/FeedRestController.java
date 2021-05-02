@@ -22,9 +22,16 @@ public class FeedRestController {
 	private FeedService feedService;
 	
 	@GetMapping
-	public List<Feed> listFeeds() {
+	public ResponseEntity<List<Feed>> listFeeds() {
 		
-		return feedService.listFeeds();
+		List<Feed> feeds = feedService.listFeeds();
+		
+		if(!feeds.isEmpty()) {
+			return new ResponseEntity<List<Feed>>(feeds, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<List<Feed>>(HttpStatus.NO_CONTENT);
+		}
+		
 		
 	}
 	
