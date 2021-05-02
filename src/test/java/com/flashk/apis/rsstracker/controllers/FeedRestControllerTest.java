@@ -1,6 +1,6 @@
 package com.flashk.apis.rsstracker.controllers;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
