@@ -1,10 +1,9 @@
 package com.flashk.apis.rsstracker.controllers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
 
 import java.util.ArrayList;
@@ -65,6 +64,10 @@ class FeedRestControllerTest {
 		// Execute method
 		ResponseEntity<List<Feed>> response = feedRestController.listFeeds();
 		
+		
+		// Assertions - Verifications
+		Mockito.verify(feedService).listFeeds(); // Verify service is called at least once.
+		
 		// Assertions - Response
 		assertNotNull(response);
 		assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -90,6 +93,8 @@ class FeedRestControllerTest {
 		// Execute method
 		ResponseEntity<List<Feed>> response = feedRestController.listFeeds();
 		
+		// Assertions - Verifications
+		Mockito.verify(feedService).listFeeds(); // Verify service is called at least once.
 		
 		// Assertions - Response
 		assertNotNull(response);
@@ -114,6 +119,9 @@ class FeedRestControllerTest {
 		// Execute method
 		ResponseEntity<Feed> result = feedRestController.getFeed("1234");
 		
+		// Assertions - Verifications
+		Mockito.verify(feedService).getFeed(any()); // Verify service is called at least once.
+		
 		// Assertions - Response
 		assertNotNull(result);
 		assertEquals(HttpStatus.OK, result.getStatusCode());
@@ -134,6 +142,9 @@ class FeedRestControllerTest {
 		
 		// Execute method
 		ResponseEntity<Feed> result = feedRestController.getFeed("1234");
+		
+		// Assertions - Verifications
+		Mockito.verify(feedService).getFeed(any()); // Verify service is called at least once.
 		
 		// Assertions - Response
 		assertNotNull(result);
