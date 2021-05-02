@@ -20,8 +20,8 @@ public class FeedRestController {
 	@GetMapping
 	public List<Feed> listFeeds() {
 		
-		List<Feed> results = feedService.listFeeds();
-		return results;
+		return feedService.listFeeds();
+		
 	}
 	
 }
