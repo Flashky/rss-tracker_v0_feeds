@@ -2,7 +2,6 @@ package com.flashk.apis.rsstracker.mappers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +17,7 @@ import com.flashk.apis.rsstracker.services.mappers.FeedMapperImpl;
 
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
-class FeedMapperTests {
+class FeedMapperTest {
 
 	private FeedMapper feedMapper = new FeedMapperImpl();
 	private static PodamFactoryImpl podamFactory;
