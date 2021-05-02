@@ -1,6 +1,7 @@
 package com.flashk.apis.rsstracker.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,19 @@ public class FeedServiceImpl implements FeedService {
 		List<FeedEntity> feedEntities = feedRepository.findAll();
 		return feedMapper.map(feedEntities);
 		
+	}
+
+	@Override
+	public Optional<Feed> getFeed(String feedId) {
+		
+		Optional<FeedEntity> feedEntity = feedRepository.findById(feedId);
+		
+		Feed result = null;
+		if(feedEntity.isPresent()) {
+			result = feedMapper.map(feedEntity.get());
+		} 
+		
+		return Optional.ofNullable(result);
 	}
 
 }
