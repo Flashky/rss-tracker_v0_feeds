@@ -13,4 +13,6 @@ public interface FeedMapper {
 	Feed map(FeedEntity feedEntity);
 	List<Feed> map(List<FeedEntity> feedEntities);
 	
+	FeedEntity map(Feed feed);
+	
 }

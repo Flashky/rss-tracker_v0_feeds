@@ -41,4 +41,27 @@ public class FeedServiceImpl implements FeedService {
 		return Optional.ofNullable(result);
 	}
 
+	@Override
+	public String createFeed(Feed feed) {
+		
+		// TODO mandatory field validation
+		// - url
+		// - description
+		// TODO validate RSS url
+	
+		FeedEntity feedEntity = feedMapper.map(feed);
+		
+		// Input id must be ignored
+		feedEntity.setId(null);
+		
+		// All feeds are enabled by default
+		if(feedEntity.getIsEnabled() == null) {
+			feedEntity.setIsEnabled(true);
+		}
+		
+		FeedEntity feedEntityResult = feedRepository.save(feedEntity);
+		
+		return feedEntityResult.getId();
+	}
+
 }
