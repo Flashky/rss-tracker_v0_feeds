@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
@@ -70,5 +71,16 @@ public class FeedsExceptionHandler extends ResponseEntityExceptionHandler {
 								.headers(headers)
 								.body(response);
 		
+	}
+	
+	@ExceptionHandler(value = InvalidRssException.class)
+	private ResponseEntity<Object> handleInvalidRssException(InvalidRssException ex){
+		
+		ErrorResponseBuilder builder = ErrorResponse.builder()
+				.title("Invalid RSS feed")
+				.detail("The input RSS url is not a valid RSS feed");
+		
+		
+		return buildResponseWithBody(builder.build(), HttpStatus.BAD_REQUEST);
 	}
 }
