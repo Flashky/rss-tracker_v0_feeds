@@ -47,7 +47,7 @@ public class FeedRestController {
 		
 		String feedId = feedService.createFeed(feed);
 		
-		URI locationUri = uriBuilder.path("/{feedId}").buildAndExpand(feedId).toUri();
+		URI locationUri = uriBuilder.path("/feeds/{feedId}").buildAndExpand(feedId).toUri();
 		
 		return ResponseEntity.created(locationUri).build();
 		
