@@ -61,7 +61,11 @@
 			<artifactId>mapstruct</artifactId>
 			<version>${org.mapstruct.version}</version>
     	</dependency>
-    	
+    	<dependency>
+		    <groupId>com.rometools</groupId>
+		    <artifactId>rome</artifactId>
+		    <version>1.16.0</version>
+		</dependency>
 		<!-- Testing dependencies -->
 		
 		<dependency>

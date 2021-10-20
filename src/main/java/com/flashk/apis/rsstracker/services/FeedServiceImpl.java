@@ -1,20 +1,24 @@
 package com.flashk.apis.rsstracker.services;
 
-import java.net.URI;
+import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.util.UriComponentsBuilder;
+import org.springframework.util.StringUtils;
 
 import com.flashk.apis.rsstracker.controllers.exceptions.InvalidRssException;
+import com.flashk.apis.rsstracker.controllers.exceptions.TechnicalException;
 import com.flashk.apis.rsstracker.controllers.model.Feed;
 import com.flashk.apis.rsstracker.repositories.FeedRepository;
 import com.flashk.apis.rsstracker.repositories.entities.FeedEntity;
 import com.flashk.apis.rsstracker.services.mappers.FeedMapper;
-import com.flashk.apis.rsstracker.ws.rssvalidator.model.Envelope;
+import com.rometools.rome.feed.synd.SyndFeed;
+import com.rometools.rome.io.FeedException;
+import com.rometools.rome.io.SyndFeedInput;
+import com.rometools.rome.io.XmlReader;
 
 @Service
 public class FeedServiceImpl implements FeedService {
@@ -49,8 +53,13 @@ public class FeedServiceImpl implements FeedService {
 	@Override
 	public String createFeed(Feed feed) {
 		
-		// Check valid RSS feed
-		validate(feed);
+		// Validate and obtain RSS data
+		SyndFeed syndFeed = readRss(feed);
+		
+		// Complete data
+		if(!StringUtils.hasText(feed.getDescription())) {
+			feed.setDescription(syndFeed.getTitle());
+		}
 		
 		// Prepare entity to save
 		FeedEntity feedEntity = feedMapper.map(feed);
@@ -66,28 +75,20 @@ public class FeedServiceImpl implements FeedService {
 		return feedEntityResult.getId();
 	}
 
-	/**
-	 * Validates whether the feed is valid or not.
-	 * @param feed the Feed to validate
-	 * @throws InvalidRssException if the feed is not a valid RSS feed.
-	 */
-	private void validate(Feed feed) {
+	private SyndFeed readRss(Feed feed) {
 		
-		WebClient webClient = WebClient.builder().build();
+		try {
+			
+			URL feedUri = new URL(feed.getUrl());
+			SyndFeedInput input = new SyndFeedInput();	
+			return input.build(new XmlReader(feedUri));
 		
-		URI validationUri = UriComponentsBuilder.fromHttpUrl("http://validator.w3.org/feed/check.cgi")
-																.queryParam("url", feed.getUrl())
-																.queryParam("output", "soap12")
-																.build()
-																.toUri();
-		
-		
-		Envelope result = webClient.get().uri(validationUri)
-				.retrieve().bodyToMono(Envelope.class).block();
-		
-		if(!result.getBody().getFeedValidationResponse().getValidity()) {
-			throw new InvalidRssException();
+		} catch (IllegalArgumentException | IOException | FeedException e) {
+			throw new InvalidRssException(e);
+		} catch (Exception e) {
+			throw new TechnicalException(e);
 		}
+		
 	}
 
 }
