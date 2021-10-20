@@ -50,7 +50,29 @@ public class FeedServiceImpl implements FeedService {
 	public String createFeed(Feed feed) {
 		
 		// Check valid RSS feed
+		validate(feed);
+		
+		// Prepare entity to save
+		FeedEntity feedEntity = feedMapper.map(feed);
+		feedEntity.setId(null);
+		
+		// All feeds are enabled by default
+		if(feedEntity.getIsEnabled() == null) {
+			feedEntity.setIsEnabled(true);
+		}
+		
+		FeedEntity feedEntityResult = feedRepository.save(feedEntity);
+		
+		return feedEntityResult.getId();
+	}
 
+	/**
+	 * Validates whether the feed is valid or not.
+	 * @param feed the Feed to validate
+	 * @throws InvalidRssException if the feed is not a valid RSS feed.
+	 */
+	private void validate(Feed feed) {
+		
 		WebClient webClient = WebClient.builder().build();
 		
 		URI validationUri = UriComponentsBuilder.fromHttpUrl("http://validator.w3.org/feed/check.cgi")
@@ -66,19 +88,6 @@ public class FeedServiceImpl implements FeedService {
 		if(!result.getBody().getFeedValidationResponse().getValidity()) {
 			throw new InvalidRssException();
 		}
-		
-		// Prepare entity to save
-		FeedEntity feedEntity = feedMapper.map(feed);
-		feedEntity.setId(null);
-		
-		// All feeds are enabled by default
-		if(feedEntity.getIsEnabled() == null) {
-			feedEntity.setIsEnabled(true);
-		}
-		
-		FeedEntity feedEntityResult = feedRepository.save(feedEntity);
-		
-		return feedEntityResult.getId();
 	}
 
 }
