@@ -65,11 +65,6 @@ public class FeedServiceImpl implements FeedService {
 		FeedEntity feedEntity = feedMapper.map(feed);
 		feedEntity.setId(null);
 		
-		// All feeds are enabled by default
-		if(feedEntity.getIsEnabled() == null) {
-			feedEntity.setIsEnabled(true);
-		}
-		
 		FeedEntity feedEntityResult = feedRepository.save(feedEntity);
 		
 		return feedEntityResult.getId();

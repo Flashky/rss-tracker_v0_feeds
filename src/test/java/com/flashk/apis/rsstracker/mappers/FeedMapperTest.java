@@ -1,5 +1,6 @@
 package com.flashk.apis.rsstracker.mappers;
 
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -47,6 +48,43 @@ class FeedMapperTest {
 		// Assertions
 		testMapping(expected, result);
 		
+	}
+
+	@Test
+	void testMapFeed() {
+		// Prepare POJOs
+		Feed expected = podamFactory.manufacturePojo(Feed.class);
+		
+		// Execute test
+		FeedEntity result = feedMapper.map(expected);
+		
+		// Assertions
+		testMapping(expected, result);
+	}
+	
+	@Test
+	void testMapFeedDefaultIsEnabled() {
+		// Prepare POJOs
+		Feed expected = podamFactory.manufacturePojo(Feed.class);
+		expected.setIsEnabled(null);
+		
+		// Execute test
+		FeedEntity result = feedMapper.map(expected);
+		
+		// Assertions
+		assertTrue(result.getIsEnabled());
+	}
+	
+	private void testMapping(Feed expected, FeedEntity result) {
+		
+		assertNotNull(result);
+		
+		assertEquals(expected.getId(), result.getId());
+		assertEquals(expected.getCreatedDate().getTime(), result.getCreatedDate().getTime());
+		assertEquals(expected.getLastModifiedDate().getTime(), result.getLastModifiedDate().getTime());
+		assertEquals(expected.getDescription(), result.getDescription());
+		assertEquals(expected.getIsEnabled(), result.getIsEnabled());
+		assertEquals(expected.getUrl(), result.getUrl());
 	}
 
 	private void testMapping(FeedEntity expected, Feed result) {
