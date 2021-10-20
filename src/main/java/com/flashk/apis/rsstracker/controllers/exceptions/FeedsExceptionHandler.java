@@ -83,4 +83,15 @@ public class FeedsExceptionHandler extends ResponseEntityExceptionHandler {
 		
 		return buildResponseWithBody(builder.build(), HttpStatus.BAD_REQUEST);
 	}
+	
+	@ExceptionHandler(value = TechnicalException.class)
+	private ResponseEntity<Object> handleInvalidTechnicalException(TechnicalException ex){
+		
+		ErrorResponseBuilder builder = ErrorResponse.builder()
+				.title("Server side error occurred")
+				.detail(ex.getMessage());
+		
+		
+		return buildResponseWithBody(builder.build(), HttpStatus.INTERNAL_SERVER_ERROR);
+	}
 }
