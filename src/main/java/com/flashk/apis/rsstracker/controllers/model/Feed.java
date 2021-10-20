@@ -22,8 +22,6 @@ public class Feed {
 	@NotBlank(message = "Feed url is mandatory", groups = { Create.class, Update.class})
 	private String url;
 	
-	
-	@NotBlank(message = "Description is mandatory" , groups = { Create.class, Update.class})
 	private String description;
 	
 	private Boolean isEnabled;
