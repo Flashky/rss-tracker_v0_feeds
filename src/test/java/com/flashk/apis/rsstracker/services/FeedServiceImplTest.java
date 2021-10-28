@@ -1,6 +1,6 @@
 package com.flashk.apis.rsstracker.services;
 
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -144,8 +144,8 @@ class FeedServiceImplTest {
 	
 		// Prepare POJOs
 		Feed feed = podamFactory.manufacturePojo(Feed.class);
-		SyndFeed syndFeed = manufactureSyndFeedPojo();
 		
+		SyndFeed syndFeed = manufactureSyndFeedPojo();
 		FeedEntity expected = podamFactory.manufacturePojo(FeedEntity.class);
 		
 		// Prepare mocks
