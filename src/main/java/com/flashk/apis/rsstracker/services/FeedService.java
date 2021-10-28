@@ -19,4 +19,5 @@ public interface FeedService {
 	 */
 	String createFeed(Feed feed);
 	
+	void deleteFeed(String feedId);	
 }
