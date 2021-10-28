@@ -1,13 +1,15 @@
 package com.flashk.apis.rsstracker.services;
 
-import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Pageable;
+
 import com.flashk.apis.rsstracker.controllers.model.Feed;
+import com.flashk.apis.rsstracker.controllers.model.PagedResponse;
 
 public interface FeedService {
 
-	List<Feed> listFeeds();
+	PagedResponse<Feed> listFeeds(Pageable pageable);
 	Optional<Feed> getFeed(String feedId);
 	
 	/** 
