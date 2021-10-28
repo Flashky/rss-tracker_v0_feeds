@@ -1,10 +1,10 @@
 package com.flashk.apis.rsstracker.controllers;
 
 import java.net.URI;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.flashk.apis.rsstracker.controllers.model.Feed;
+import com.flashk.apis.rsstracker.controllers.model.PagedResponse;
 import com.flashk.apis.rsstracker.controllers.model.ValidationGroups.Create;
 import com.flashk.apis.rsstracker.services.FeedService;
 
@@ -28,14 +29,14 @@ public class FeedRestController {
 	private FeedService feedService;
 	
 	@GetMapping
-	public ResponseEntity<List<Feed>> listFeeds() {
+	public ResponseEntity<PagedResponse<Feed>> listFeeds(Pageable pageable) {
 		
-		List<Feed> feeds = feedService.listFeeds();
+		PagedResponse<Feed> feedPage = feedService.listFeeds(pageable);
 		
-		if(!feeds.isEmpty()) {
-			return new ResponseEntity<List<Feed>>(feeds, HttpStatus.OK);
+		if(!feedPage.isEmpty()) {
+			return new ResponseEntity<PagedResponse<Feed>>(feedPage, HttpStatus.OK);
 		} else {
-			return new ResponseEntity<List<Feed>>(HttpStatus.NO_CONTENT);
+			return new ResponseEntity<PagedResponse<Feed>>(HttpStatus.NO_CONTENT);
 		}
 		
 		

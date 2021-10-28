@@ -18,10 +18,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.flashk.apis.rsstracker.controllers.model.Feed;
+import com.flashk.apis.rsstracker.controllers.model.PagedResponse;
 import com.flashk.apis.rsstracker.services.FeedService;
 
 import uk.co.jemos.podam.api.PodamFactory;
@@ -56,28 +58,30 @@ class FeedRestControllerTest {
 	void testListFeeds() {
 		
 		// Prepare POJOs
-		List<Feed> expected = podamFactory.manufacturePojo(ArrayList.class, Feed.class);
+		Pageable pageable = podamFactory.manufacturePojo(Pageable.class);
+		List<Feed> feeds = podamFactory.manufacturePojo(ArrayList.class, Feed.class);
+		PagedResponse<Feed> expected = PagedResponse.<Feed>builder().data(feeds).page(null).build();
 		
 		// Prepare mocks
-		Mockito.doReturn(expected).when(feedService).listFeeds();
+		Mockito.doReturn(expected).when(feedService).listFeeds(pageable);
 		
 		// Execute method
-		ResponseEntity<List<Feed>> response = feedRestController.listFeeds();
+		ResponseEntity<PagedResponse<Feed>> response = feedRestController.listFeeds(pageable);
 		
 		
 		// Assertions - Verifications
-		Mockito.verify(feedService).listFeeds(); // Verify service is called at least once.
+		Mockito.verify(feedService).listFeeds(pageable); // Verify service is called at least once.
 		
 		// Assertions - Response
 		assertNotNull(response);
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		
 		// Assertions - Body
-		List<Feed> result = response.getBody();
+		PagedResponse<Feed> result = response.getBody();
 		
 		assertNotNull(result);
 		assertFalse(result.isEmpty());
-		assertEquals(expected.size(), result.size());
+		assertEquals(expected.getData().size(), result.getData().size());
 
 	}
 	
@@ -85,23 +89,24 @@ class FeedRestControllerTest {
 	void testListFeedsEmpty() {
 		
 		// Prepare POJOs
-		List<Feed> expected = new ArrayList<>();
+		Pageable pageable = podamFactory.manufacturePojo(Pageable.class);
+		PagedResponse<Feed> expected = PagedResponse.<Feed>builder().data(new ArrayList<>()).build();
 		
 		// Prepare mocks
-		Mockito.doReturn(expected).when(feedService).listFeeds();
+		Mockito.doReturn(expected).when(feedService).listFeeds(pageable);
 		
 		// Execute method
-		ResponseEntity<List<Feed>> response = feedRestController.listFeeds();
+		ResponseEntity<PagedResponse<Feed>> response = feedRestController.listFeeds(pageable);
 		
 		// Assertions - Verifications
-		Mockito.verify(feedService).listFeeds(); // Verify service is called at least once.
+		Mockito.verify(feedService).listFeeds(pageable); // Verify service is called at least once.
 		
 		// Assertions - Response
 		assertNotNull(response);
 		assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
 		
 		// Assertions - Body
-		List<Feed> result = response.getBody();
+		PagedResponse<Feed> result = response.getBody();
 		assertNull(result);
 
 	}

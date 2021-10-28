@@ -3,6 +3,8 @@ package com.flashk.apis.rsstracker.controllers.exceptions;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,6 +24,7 @@ import com.flashk.apis.rsstracker.controllers.model.InvalidFieldError;
 @RestControllerAdvice
 public class FeedsExceptionHandler extends ResponseEntityExceptionHandler {
 
+	private Logger logger = LoggerFactory.getLogger(FeedsExceptionHandler.class);
 	
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(
@@ -74,7 +77,9 @@ public class FeedsExceptionHandler extends ResponseEntityExceptionHandler {
 	}
 	
 	@ExceptionHandler(value = InvalidRssException.class)
-	private ResponseEntity<Object> handleInvalidRssException(InvalidRssException ex){
+	protected ResponseEntity<Object> handleInvalidRssException(InvalidRssException ex){
+		
+		logger.info(ex.getMessage());
 		
 		ErrorResponseBuilder builder = ErrorResponse.builder()
 				.title("Invalid RSS feed")
@@ -85,7 +90,9 @@ public class FeedsExceptionHandler extends ResponseEntityExceptionHandler {
 	}
 	
 	@ExceptionHandler(value = TechnicalException.class)
-	private ResponseEntity<Object> handleInvalidTechnicalException(TechnicalException ex){
+	protected ResponseEntity<Object> handleInvalidTechnicalException(TechnicalException ex){
+		
+		logger.info(ex.getMessage());
 		
 		ErrorResponseBuilder builder = ErrorResponse.builder()
 				.title("Server side error occurred")

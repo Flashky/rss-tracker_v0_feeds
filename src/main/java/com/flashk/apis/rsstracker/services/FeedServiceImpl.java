@@ -6,12 +6,16 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.flashk.apis.rsstracker.controllers.exceptions.InvalidRssException;
 import com.flashk.apis.rsstracker.controllers.exceptions.TechnicalException;
 import com.flashk.apis.rsstracker.controllers.model.Feed;
+import com.flashk.apis.rsstracker.controllers.model.PagedResponse;
+import com.flashk.apis.rsstracker.controllers.model.Pagination;
 import com.flashk.apis.rsstracker.repositories.FeedRepository;
 import com.flashk.apis.rsstracker.repositories.entities.FeedEntity;
 import com.flashk.apis.rsstracker.services.mappers.FeedMapper;
@@ -28,12 +32,17 @@ public class FeedServiceImpl implements FeedService {
 	
 	@Autowired
 	private FeedMapper feedMapper;
-	
-	@Override
-	public List<Feed> listFeeds() {
 
-		List<FeedEntity> feedEntities = feedRepository.findAll();
-		return feedMapper.map(feedEntities);
+	@Override
+	public PagedResponse<Feed> listFeeds(Pageable pageable) {
+
+		Page<FeedEntity> feedEntitiesPage = feedRepository.findAll(pageable);
+		
+		// Map data and pagination objects
+		List<Feed> feeds = feedMapper.map(feedEntitiesPage.getContent());
+		Pagination pagination = new Pagination(feeds.size(), feedEntitiesPage.getNumber(), feedEntitiesPage.getTotalElements());
+
+		return PagedResponse.<Feed>builder().data(feeds).page(pagination).build();
 		
 	}
 
