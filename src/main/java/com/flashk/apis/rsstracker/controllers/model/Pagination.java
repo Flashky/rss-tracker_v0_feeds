@@ -1,6 +1,5 @@
 package com.flashk.apis.rsstracker.controllers.model;
 
-import org.springframework.hateoas.PagedModel.PageMetadata;
 import org.springframework.util.Assert;
 
 import lombok.Getter;
