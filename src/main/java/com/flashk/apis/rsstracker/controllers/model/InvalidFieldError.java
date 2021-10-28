@@ -1,8 +1,10 @@
 package com.flashk.apis.rsstracker.controllers.model;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @EqualsAndHashCode(callSuper = true)
 public class InvalidFieldError extends ApiError {
 

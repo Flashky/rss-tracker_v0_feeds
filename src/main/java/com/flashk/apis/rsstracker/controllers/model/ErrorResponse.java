@@ -6,7 +6,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * RFC 7807 compliant response class
@@ -14,7 +15,8 @@ import lombok.Data;
  * @see <a href="https://datatracker.ietf.org/doc/html/rfc7807">RFC 7807</a>
  *
  */
-@Data
+@Getter
+@Setter
 @Builder
 @JsonInclude(Include.NON_NULL)
 public class ErrorResponse {
