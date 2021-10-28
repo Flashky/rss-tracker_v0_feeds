@@ -19,6 +19,14 @@ public class FeedEntity {
 
 	@Id
 	private String id;
+	private String title;
+	private String description;
+	private String link;
+	
+	private String url;
+	private Boolean isEnabled;
+	
+	// Auditing fields
 	
 	@CreatedDate
 	@JsonFormat(timezone = "GMT+02:00")
@@ -27,10 +35,6 @@ public class FeedEntity {
 	@LastModifiedDate
 	@JsonFormat(timezone = "GMT+02:00")
 	private Date lastModifiedDate;
-	
-	private String url;
-	private String description;
-	private Boolean isEnabled;
 	
 
 	

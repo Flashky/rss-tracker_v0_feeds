@@ -67,8 +67,19 @@ public class FeedServiceImpl implements FeedService {
 		SyndFeed syndFeed = readRss(feed);
 		
 		// Complete data
+		// By default, service will insert input data. 
+		// If no input data is set, it will attempt to retrieve from the RSS feed.
+		
+		if(!StringUtils.hasText(feed.getTitle())) {
+			feed.setTitle(syndFeed.getTitle());
+		}
+		
 		if(!StringUtils.hasText(feed.getDescription())) {
-			feed.setDescription(syndFeed.getTitle());
+			feed.setDescription(syndFeed.getDescription());
+		}
+		
+		if(!StringUtils.hasText(feed.getLink())) {
+			feed.setLink(syndFeed.getLink());
 		}
 		
 		// Prepare entity to save

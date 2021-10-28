@@ -16,15 +16,17 @@ import lombok.Data;
 public class Feed {
 	
 	private String id;
-	private Date createdDate;
-	private Date lastModifiedDate;
+	private String title;
+	private String description;
+	private String link;
 	
 	@NotBlank(message = "Feed url is mandatory", groups = { Create.class, Update.class})
 	private String url;
-	
-	private String description;
-	
 	private Boolean isEnabled;
 	
+	// Auditing fields
+	
+	private Date createdDate;
+	private Date lastModifiedDate;
 	
 }
