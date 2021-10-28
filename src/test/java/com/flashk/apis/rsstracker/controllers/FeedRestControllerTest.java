@@ -22,9 +22,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.flashk.apis.rsstracker.controllers.exceptions.RssNotFoundException;
 import com.flashk.apis.rsstracker.controllers.model.Feed;
+import com.flashk.apis.rsstracker.controllers.model.Link;
 import com.flashk.apis.rsstracker.controllers.model.PagedResponse;
 import com.flashk.apis.rsstracker.services.FeedService;
 
@@ -35,6 +37,8 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 @SuppressWarnings("unchecked")
 class FeedRestControllerTest {
 
+	private final static String SAMPLE_BASE_URI = "http://base-uri";
+	
 	@InjectMocks
 	private FeedRestController feedRestController = new FeedRestController();
 	
@@ -111,6 +115,38 @@ class FeedRestControllerTest {
 		PagedResponse<Feed> result = response.getBody();
 		assertNull(result);
 
+	}
+	
+	@Test
+	void testCreateFeed() {
+		
+		// Prepare POJOs
+		Feed feed = new Feed();
+		feed.setSourceLink(podamFactory.manufacturePojo(Link.class));
+		Feed expected = podamFactory.manufacturePojo(Feed.class);
+		String expectedLocationHeader = SAMPLE_BASE_URI + "/feeds/"+expected.getId();
+		
+		// Prepare mocks
+		Mockito.doReturn(expected).when(feedService).createFeed(any());
+		
+		// Execute method
+		ResponseEntity<Feed> result = feedRestController.createFeed(feed, UriComponentsBuilder.fromHttpUrl(SAMPLE_BASE_URI));
+		
+		// Assertions - Verifications
+		Mockito.verify(feedService).createFeed(any());
+		
+		// Assertions - Response
+		assertNotNull(result);
+		assertEquals(HttpStatus.CREATED, result.getStatusCode());
+		
+		// Assertions - Body
+		assertNotNull(result.getBody());
+		
+		// Assertions - Headers
+		assertNotNull(result.getHeaders());
+		assertNotNull(result.getHeaders().getLocation());
+		assertEquals(expectedLocationHeader, result.getHeaders().getLocation().toString());
+		
 	}
 	
 	@Test

@@ -2,7 +2,7 @@ package com.flashk.apis.rsstracker.controllers.model;
 
 import java.util.Date;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -20,8 +20,8 @@ public class Feed {
 	private String description;
 	private String link;
 	
-	@NotBlank(message = "Feed url is mandatory", groups = { Create.class, Update.class})
-	private String url;
+	@NotNull(message = "Source link is mandatory", groups = { Create.class, Update.class})
+	private Link sourceLink;
 	private Boolean isEnabled;
 	
 	// Auditing fields

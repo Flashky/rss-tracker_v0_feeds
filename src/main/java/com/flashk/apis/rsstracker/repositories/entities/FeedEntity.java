@@ -23,7 +23,7 @@ public class FeedEntity {
 	private String description;
 	private String link;
 	
-	private String url;
+	private String sourceLink;
 	private Boolean isEnabled;
 	
 	// Auditing fields

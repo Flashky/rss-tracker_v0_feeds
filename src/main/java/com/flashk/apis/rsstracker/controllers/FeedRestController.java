@@ -44,14 +44,14 @@ public class FeedRestController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Void> createFeed(@RequestBody @Validated(Create.class) Feed feed, 
+	public ResponseEntity<Feed> createFeed(@RequestBody @Validated(Create.class) Feed feed, 
 															UriComponentsBuilder uriBuilder) {
 		
-		String feedId = feedService.createFeed(feed);
+		Feed createdFeed = feedService.createFeed(feed);
 		
-		URI locationUri = uriBuilder.path("/feeds/{feedId}").buildAndExpand(feedId).toUri();
+		URI locationUri = uriBuilder.path("/feeds/{feedId}").buildAndExpand(createdFeed.getId()).toUri();
 		
-		return ResponseEntity.created(locationUri).build();
+		return ResponseEntity.created(locationUri).body(createdFeed);
 		
 	}
 	
