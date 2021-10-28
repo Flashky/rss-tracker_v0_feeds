@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,6 +24,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
+import com.flashk.apis.rsstracker.controllers.exceptions.RssNotFoundException;
 import com.flashk.apis.rsstracker.controllers.model.Feed;
 import com.flashk.apis.rsstracker.controllers.model.PagedResponse;
 import com.flashk.apis.rsstracker.repositories.FeedRepository;
@@ -143,6 +145,32 @@ class FeedServiceImplTest {
 		
 		assertNotNull(result);
 		assertFalse(result.isPresent()); // There is data
+	}
+	
+	@Test
+	void testDeleteFeed() {
+		
+		// Prepare mocks
+		Mockito.doReturn(true).when(feedRepository).existsById(any());
+		Mockito.doNothing().when(feedRepository).deleteById(any());
+		
+		// Execute method
+		feedService.deleteFeed("1234");
+		
+		// Assertions
+		Mockito.verify(feedRepository).deleteById(any());
+		
+	}
+	
+	@Test
+	void testDeleteFeedNotPresent() {
+		
+		// Prepare mocks
+		Mockito.doReturn(false).when(feedRepository).existsById(any());
+
+		// Execute method + Assertion
+		Assertions.assertThrows(RssNotFoundException.class, () -> feedService.deleteFeed("1234"));
+		
 	}
 
 
