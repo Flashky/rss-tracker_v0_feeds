@@ -80,6 +80,16 @@ public class FeedServiceImpl implements FeedService {
 		return feedEntityResult.getId();
 	}
 
+	@Override
+	public void deleteFeed(String feedId) {
+		
+		if(!feedRepository.existsById(feedId)) {
+			throw new RssNotFoundException();
+		}
+		
+		feedRepository.deleteById(feedId);
+	}
+	
 	private SyndFeed readRss(Feed feed) {
 		
 		try {
@@ -96,14 +106,6 @@ public class FeedServiceImpl implements FeedService {
 		
 	}
 
-	@Override
-	public void deleteFeed(String feedId) {
-		
-		if(!feedRepository.existsById(feedId)) {
-			throw new RssNotFoundException();
-		}
-		
-		feedRepository.deleteById(feedId);
-	}
+
 
 }
