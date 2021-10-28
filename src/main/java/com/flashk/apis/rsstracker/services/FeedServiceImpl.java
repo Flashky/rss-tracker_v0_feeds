@@ -61,14 +61,25 @@ public class FeedServiceImpl implements FeedService {
 	}
 
 	@Override
-	public String createFeed(Feed feed) {
+	public Feed createFeed(Feed feed) {
 		
 		// Validate and obtain RSS data
 		SyndFeed syndFeed = readRss(feed);
 		
 		// Complete data
+		// By default, service will insert input data. 
+		// If no input data is set, it will attempt to retrieve from the RSS feed.
+
+		if(!StringUtils.hasText(feed.getTitle())) {
+			feed.setTitle(syndFeed.getTitle());
+		}
+		
 		if(!StringUtils.hasText(feed.getDescription())) {
-			feed.setDescription(syndFeed.getTitle());
+			feed.setDescription(syndFeed.getDescription());
+		}
+		
+		if(!StringUtils.hasText(feed.getLink())) {
+			feed.setLink(syndFeed.getLink());
 		}
 		
 		// Prepare entity to save
@@ -77,7 +88,7 @@ public class FeedServiceImpl implements FeedService {
 		
 		FeedEntity feedEntityResult = feedRepository.save(feedEntity);
 		
-		return feedEntityResult.getId();
+		return feedMapper.map(feedEntityResult);
 	}
 
 	@Override
@@ -90,11 +101,11 @@ public class FeedServiceImpl implements FeedService {
 		feedRepository.deleteById(feedId);
 	}
 	
-	private SyndFeed readRss(Feed feed) {
+	protected SyndFeed readRss(Feed feed) {
 		
 		try {
 			
-			URL feedUri = new URL(feed.getUrl());
+			URL feedUri = new URL(feed.getSourceLink().getHref());
 			SyndFeedInput input = new SyndFeedInput();	
 			return input.build(new XmlReader(feedUri));
 		

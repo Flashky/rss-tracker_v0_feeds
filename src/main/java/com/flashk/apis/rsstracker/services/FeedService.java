@@ -15,9 +15,9 @@ public interface FeedService {
 	/** 
 	 * Creates a feed.
 	 * @param feed The feed to be created.
-	 * @return The id of the created feed.
+	 * @return the created feed.
 	 */
-	String createFeed(Feed feed);
+	Feed createFeed(Feed feed);
 	
 	void deleteFeed(String feedId);	
 }

@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.flashk.apis.rsstracker.controllers.model.Feed;
+import com.flashk.apis.rsstracker.controllers.model.Link;
 import com.flashk.apis.rsstracker.repositories.entities.FeedEntity;
 import com.flashk.apis.rsstracker.services.mappers.FeedMapper;
 import com.flashk.apis.rsstracker.services.mappers.FeedMapperImpl;
@@ -84,7 +85,15 @@ class FeedMapperTest {
 		assertEquals(expected.getLastModifiedDate().getTime(), result.getLastModifiedDate().getTime());
 		assertEquals(expected.getDescription(), result.getDescription());
 		assertEquals(expected.getIsEnabled(), result.getIsEnabled());
-		assertEquals(expected.getUrl(), result.getUrl());
+		testMapping(expected.getSourceLink(), result.getSourceLink());
+
+	}
+
+	private void testMapping(Link expected, String result) {
+		
+		assertNotNull(result);
+		assertEquals(expected.getHref(), result);
+		
 	}
 
 	private void testMapping(FeedEntity expected, Feed result) {
@@ -96,10 +105,19 @@ class FeedMapperTest {
 		assertEquals(expected.getLastModifiedDate().getTime(), result.getLastModifiedDate().getTime());
 		assertEquals(expected.getDescription(), result.getDescription());
 		assertEquals(expected.getIsEnabled(), result.getIsEnabled());
-		assertEquals(expected.getUrl(), result.getUrl());
+		testMapping(expected.getSourceLink(), result.getSourceLink());
+		
 	}
 
 	
+	private void testMapping(String expected, Link result) {
+
+		assertNotNull(result);
+		
+		assertEquals(expected, result.getHref());
+		
+	}
+
 	@Test
 	@SuppressWarnings("unchecked")
 	void testMapListOfFeedEntity() {
