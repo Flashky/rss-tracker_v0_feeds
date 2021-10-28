@@ -89,6 +89,19 @@ public class FeedsExceptionHandler extends ResponseEntityExceptionHandler {
 		return buildResponseWithBody(builder.build(), HttpStatus.BAD_REQUEST);
 	}
 	
+	@ExceptionHandler(value = RssNotFoundException.class)
+	protected ResponseEntity<Object> handleRssNotFoundException(RssNotFoundException ex){
+		
+		logger.info(ex.getMessage());
+		
+		ErrorResponseBuilder builder = ErrorResponse.builder()
+				.title("No RSS found with the given id.")
+				.detail("The input RSS feed id does not exists.");
+		
+		
+		return buildResponseWithBody(builder.build(), HttpStatus.BAD_REQUEST);
+	}
+	
 	@ExceptionHandler(value = TechnicalException.class)
 	protected ResponseEntity<Object> handleInvalidTechnicalException(TechnicalException ex){
 		
