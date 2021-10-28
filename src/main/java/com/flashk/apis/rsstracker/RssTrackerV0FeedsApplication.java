@@ -5,7 +5,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.config.EnableMongoAuditing;
 
 @SpringBootApplication
-//@EnableMongoRepositories
 @EnableMongoAuditing // Support for @CreatedDate on Documents
 public class RssTrackerV0FeedsApplication {
 
