@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -79,7 +80,7 @@ public class FeedsExceptionHandler extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(value = InvalidRssException.class)
 	protected ResponseEntity<Object> handleInvalidRssException(InvalidRssException ex){
 		
-		logger.info(ex.getMessage());
+		logError(ex);
 		
 		ErrorResponseBuilder builder = ErrorResponse.builder()
 				.title("Invalid RSS feed")
@@ -92,7 +93,7 @@ public class FeedsExceptionHandler extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(value = RssNotFoundException.class)
 	protected ResponseEntity<Object> handleRssNotFoundException(RssNotFoundException ex){
 		
-		logger.info(ex.getMessage());
+		logError(ex);
 		
 		ErrorResponseBuilder builder = ErrorResponse.builder()
 				.title("No RSS found with the given id.")
@@ -105,7 +106,7 @@ public class FeedsExceptionHandler extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(value = TechnicalException.class)
 	protected ResponseEntity<Object> handleInvalidTechnicalException(TechnicalException ex){
 		
-		logger.info(ex.getMessage());
+		logError(ex);
 		
 		ErrorResponseBuilder builder = ErrorResponse.builder()
 				.title("Server side error occurred")
@@ -113,5 +114,12 @@ public class FeedsExceptionHandler extends ResponseEntityExceptionHandler {
 		
 		
 		return buildResponseWithBody(builder.build(), HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
+	private void logError(RuntimeException ex) {
+		
+		if(StringUtils.hasText(ex.getMessage())) {
+			logger.info(ex.getMessage());
+		}
 	}
 }
