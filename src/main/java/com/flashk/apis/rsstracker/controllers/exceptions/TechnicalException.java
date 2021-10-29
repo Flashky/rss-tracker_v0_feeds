@@ -10,9 +10,5 @@ public class TechnicalException extends RuntimeException {
 	public TechnicalException() {
 		super();
 	}
-	
-	public TechnicalException(Throwable cause) {
-		super(cause);
-	}
 
 }

@@ -10,9 +10,5 @@ public class InvalidRssException extends RuntimeException {
 	public InvalidRssException() {
 		super();
 	}
-	
-	public InvalidRssException(Throwable cause) {
-		super(cause);
-	}
 
 }

@@ -10,9 +10,5 @@ public class RssNotFoundException extends RuntimeException {
 	public RssNotFoundException() {
 		super();
 	}
-	
-	public RssNotFoundException(Throwable cause) {
-		super(cause);
-	}
 
 }
