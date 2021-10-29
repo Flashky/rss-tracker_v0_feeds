@@ -6,12 +6,14 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.flashk.apis.rsstracker.controllers.model.ValidationGroups.Create;
-import com.flashk.apis.rsstracker.controllers.model.ValidationGroups.Update;
+import com.flashk.apis.rsstracker.controllers.validations.Create;
+import com.flashk.apis.rsstracker.controllers.validations.Update;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @JsonInclude(Include.NON_NULL)
 public class Feed {
 	

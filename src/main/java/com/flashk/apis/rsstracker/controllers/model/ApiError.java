@@ -1,8 +1,10 @@
 package com.flashk.apis.rsstracker.controllers.model;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class ApiError {
 
 	private String message;

@@ -19,7 +19,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.flashk.apis.rsstracker.controllers.model.Feed;
 import com.flashk.apis.rsstracker.controllers.model.PagedResponse;
-import com.flashk.apis.rsstracker.controllers.model.ValidationGroups.Create;
+import com.flashk.apis.rsstracker.controllers.validations.Create;
 import com.flashk.apis.rsstracker.services.FeedService;
 
 @RestController
