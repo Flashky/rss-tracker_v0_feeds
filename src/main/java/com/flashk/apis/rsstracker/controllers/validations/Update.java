@@ -2,6 +2,6 @@ package com.flashk.apis.rsstracker.controllers.validations;
 
 import javax.validation.groups.Default;
 
-public class Update implements Default {
+public interface Update extends Default {
 
 }
