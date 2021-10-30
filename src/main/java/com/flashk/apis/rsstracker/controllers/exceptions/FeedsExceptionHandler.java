@@ -35,7 +35,7 @@ public class FeedsExceptionHandler extends ResponseEntityExceptionHandler {
 		
 		ErrorResponseBuilder builder = ErrorResponse.builder()
 				.title("There are validation errors")
-				.detail("Please check  the following fields before sending a new request")
+				.detail("Please check the following fields before sending a new request")
 				.invalidParameters(invalidParameters);
 		
 		 ex.getBindingResult().getAllErrors().forEach((error) -> {
