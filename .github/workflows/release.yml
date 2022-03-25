@@ -39,7 +39,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: get-tag
     steps:
-      - name: Yet another step # Environment variabl usage example
+      - name: Display tag
         run: |
           echo ${{env.git_tag}}
+      - name: Show all env
+        run: |
+          echo ${{env}}
     
