@@ -30,6 +30,10 @@ jobs:
         echo "Expected: v([0-9]+.[0-9]+.[0-9]+[-]?\\w*)"
         echo "But found: ${GITHUB_REF##*/}"
         exit 1
+    - name: Save tag
+      if: steps.version.outputs.tag != null
+      run: |
+        echo "git_tag=${{steps.version.outputs.tag}}" >> $GITHUB_ENV
         
   build:
     runs-on: ubuntu-latest
@@ -37,5 +41,5 @@ jobs:
     steps:
       - name: Yet another step # Environment variabl usage example
         run: |
-          echo ${env}
+          echo ${{env.git_tag}}
     
