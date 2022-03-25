@@ -37,5 +37,5 @@ jobs:
     steps:
       - name: Yet another step # Environment variabl usage example
         run: |
-          echo $GIT_TAG_NAME
+          echo ${env}
     
