@@ -15,8 +15,9 @@ jobs:
   # Obtains version from tag and verifies it is valid.
   # Allowed format is prefix "v" and alphanumeric characters.
   # Examples: v0.1.0, v0.1.0-alpha, v0.1.0-RELEASE
-  get-tag:
+  verify-tag:
     runs-on: ubuntu-latest
+    name: verify tag
     steps:
     - uses: actions/checkout@v2
     - uses: olegtarasov/get-tag@v2.1.1
@@ -30,19 +31,14 @@ jobs:
         echo "Expected: v([0-9]+.[0-9]+.[0-9]+[-]?\\w*)"
         echo "But found: ${GITHUB_REF##*/}"
         exit 1
-    - name: Save tag
-      if: steps.version.outputs.tag != null
-      run: |
-        echo "git_tag=${{steps.version.outputs.tag}}" >> $GITHUB_ENV
         
   build:
     runs-on: ubuntu-latest
     needs: get-tag
+    env:
+      git_tag: $(echo ${GITHUB_REF##*/v})
     steps:
       - name: Display tag
         run: |
-          echo $GIT_TAG
-      - name: Display tag name
-        run: |
-          echo $GIT_TAG_NAME
+          echo ${{env.git_tag}}
     
