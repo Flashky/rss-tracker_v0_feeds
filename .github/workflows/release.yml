@@ -71,4 +71,6 @@ jobs:
         path: target
     - name: Get release version
       run: echo "RELEASE_VERSION=$(echo ${GITHUB_REF##*/v})" >> $GITHUB_ENV
+    - name: Show release version
+      run: echo "${{ env.RELEASE_VERSION }}"
 
