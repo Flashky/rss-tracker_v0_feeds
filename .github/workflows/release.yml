@@ -1,0 +1,41 @@
+# This workflow will build a Java project with Maven and then create a Docker image from its Dockerfile.
+# For more information see: 
+# - https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
+# - https://github.com/marketplace/actions/build-tag-publish-docker
+
+name: Release version
+
+on:
+  release:
+    types: [published]
+
+
+jobs:
+  
+  # Obtains version from tag and verifies it is valid.
+  # Allowed format is prefix "v" and alphanumeric characters.
+  # Examples: v0.1.0, v0.1.0-alpha, v0.1.0-RELEASE
+  get-tag:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: olegtarasov/get-tag@v2
+      id: version
+      with:
+        tagRegex: "^v([0-9]+.[0-9]+.[0-9]+[-]?\\w*)"  # Optional. Returns specified group text as tag name. Full tag string is returned if regex is not defined.
+    - name: Abort release
+      if: steps.version.outputs.tag == null
+      run: | 
+        echo "Tag name is invalid."
+        echo "Expected: v([0-9]+.[0-9]+.[0-9]+[-]?\\w*)"
+        echo "But found: ${GITHUB_REF##*/}"
+        exit 1
+        
+  build:
+    runs-on: ubuntu-latest
+    needs: get-tag
+    steps:
+      - name: Yet another step # Environment variabl usage example
+        run: |
+          echo $GIT_TAG_NAME
+    
