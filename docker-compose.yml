@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   rss-tracker_v0_feeds:
-    image: flashk/rss-tracker_v0_feeds:0.0.1
+    image: flashk/rss-tracker_v0_feeds:latest
     container_name: rss-tracker_v0_feeds
     ports:
       - "8080:8080"
