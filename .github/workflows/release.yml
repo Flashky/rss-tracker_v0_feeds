@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: olegtarasov/get-tag@v2
+    - uses: olegtarasov/get-tag@v2.1.1
       id: version
       with:
         tagRegex: "^v([0-9]+.[0-9]+.[0-9]+[-]?\\w*)"  # Optional. Returns specified group text as tag name. Full tag string is returned if regex is not defined.
