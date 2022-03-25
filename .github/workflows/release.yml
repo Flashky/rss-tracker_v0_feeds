@@ -41,8 +41,5 @@ jobs:
     steps:
       - name: Display tag
         run: |
-          echo ${{env.git_tag}}
-      - name: Show all env
-        run: |
-          echo ${{env}}
+          echo $GIT_TAG
     
