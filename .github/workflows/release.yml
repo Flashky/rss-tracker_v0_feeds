@@ -42,4 +42,7 @@ jobs:
       - name: Display tag
         run: |
           echo $GIT_TAG
+      - name: Display tag name
+        run: |
+          echo $GIT_TAG_NAME
     
