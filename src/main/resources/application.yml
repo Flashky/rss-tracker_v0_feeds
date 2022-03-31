@@ -11,5 +11,5 @@ spring:
       host: ${MONGODB_HOST:localhost}
       port: ${MONGODB_PORT:27017}
       database: ${MONGODB_DATABASE:rss_tracker_db}
-      username: ${MONGODB_USERNAME}
-      password: ${MONGODB_PASSWORD}
+      username: ${MONGODB_USERNAME:admin}
+      password: ${MONGODB_PASSWORD:admin}
