@@ -6,32 +6,37 @@
 
 ## Configuration properties
 
-You must set these configuration properties by overriding either ``application.yml`` or as environment variables before running the service:
+Before running the service, you will need to customize several properties:
 
 Property | Description | Default value
 --|--|--
 ``MONGODB_HOST`` | The MongoDB instance hostname or ip | ``localhost``
 ``MONGODB_PORT`` | The MongoDB port | ``27017``
-``MONGODB_DATABASE`` | The MongoDB database | ``rss_tracker_db``
 ``MONGODB_USERNAME`` | The MongoDB username | ``admin`` **(*)**
 ``MONGODB_PASSWORD`` | The MongoDB password | ``admin`` **(*)**
+``MONGODB_DATABASE`` | The MongoDB database | ``rss_tracker_db``
 
 ***:** *It is highly encouraged to change both default username and password.*
+
+They can be found inside the provided ``.env`` file. 
+You can also create any additional copies of this file in order to setup different execution environments that point to different databases.
 
 ## Running the service
 
 There are several ways to run the service.
 
-- [Java Standalone]
+- Java Standalone
 - Docker Standalone
 - Docker Compose
+
+Before running by either of these options, please first setup the needed configuration properties at ``.env`` file.
 
 ### Java Standalone
 
 #### Requirements
 
 - JDK 8.
-- Maven
+- Maven.
 - MongoDB instance running with user and password.
 
 #### Build
@@ -44,14 +49,63 @@ cd rss-tracker_v0_feeds
 mvn clean package
 ```
 
-#### Configure environment variables
+#### Run
 
-Check **Configuration properties** section.
+Give execution permissions to the following script:
+
+```ssh
+chmod +x run_standalone.sh
+```
+
+Run:
+
+```ssh
+./run_standalone.sh
+```
+
+This will execute the service using the configuration defined at the ``.env`` file.
+
+### Docker Standalone
+
+#### Requirements
+
+- Docker.
+- MongoDB instance running with user and password.
+
+#### Image pull
+
+Download the latest docker image:
+
+```shell
+docker pull flashk/rss-tracker_v0_feeds:latest
+```
 
 #### Run
 
-```ssh
-java -jar target/rss-tracker-v0-feeds-{version}.jar
+```shell
+docker run --name rss-tracker_v0_feeds --env-file .env -dp 8080:8080 flashk/rss-tracker_v0_feeds:latest
 ```
 
-**Note:** *Must be* ``version`` *the compiled version suffix.*
+### Docker Compose
+
+#### Requirements
+
+- Docker.
+
+#### Run
+
+```shell
+docker compose up
+```
+
+The previous command will setup a Docker container with MongoDB and another Docker container with the service. 
+It will use ``.env`` file by default.
+
+You can also customize a different ``.env`` file. 
+For example, the following will use an env file named as ``.env.dev``:
+
+```shell
+docker compose --env-file .env.dev up 
+```
+
+
