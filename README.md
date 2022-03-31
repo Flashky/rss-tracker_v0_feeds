@@ -16,9 +16,9 @@ Property | Description | Default value
 ``MONGODB_PASSWORD`` | The MongoDB password | ``admin`` **(*)**
 ``MONGODB_DATABASE`` | The MongoDB database | ``rss_tracker_db``
 
-***:** *It is highly encouraged to change both default username and password.*
+***:** *It is highly recommended to change both default username and password.*
 
-They can be found inside the provided ``.env`` file. 
+These properties can be found inside the provided ``.env`` file. 
 You can also create any additional copies of this file in order to setup different execution environments that point to different databases.
 
 ## Running the service
