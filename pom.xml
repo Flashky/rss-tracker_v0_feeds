@@ -11,7 +11,7 @@
 	
 	<groupId>com.flashk.apis.rsstracker</groupId>
 	<artifactId>rss-tracker-v0-feeds</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.3</version>
 	<name>rss-tracker-v0-feeds</name>
 
 	<properties>
