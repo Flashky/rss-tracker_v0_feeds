@@ -13,3 +13,10 @@ spring:
       database: ${MONGODB_DATABASE:rss_tracker_db}
       username: ${MONGODB_USERNAME:admin}
       password: ${MONGODB_PASSWORD:admin}
+      
+  # OAuth configuration
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${OAUTH2_ISSUER_URI:https://your-oauth-issuer-uri}
