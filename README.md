@@ -15,6 +15,7 @@ Property | Description | Default value
 ``MONGODB_USERNAME`` | The MongoDB username | ``admin`` **(*)**
 ``MONGODB_PASSWORD`` | The MongoDB password | ``admin`` **(*)**
 ``MONGODB_DATABASE`` | The MongoDB database | ``rss_tracker_db``
+``OAUTH2_ISSUER_URI`` | The OAuth Issuer URI | ``https:\\your-oauth-issuer-uri``
 
 ***:** *It is highly recommended to change both default username and password.*
 
